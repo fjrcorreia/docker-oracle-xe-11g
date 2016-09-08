@@ -1,0 +1,7 @@
+CONNECT / as sysdba
+SHUT
+STARTUP RESTRICT
+Alter database character set INTERNAL_USE WE8MSWIN1252;
+SHUT
+STARTUP
+exit

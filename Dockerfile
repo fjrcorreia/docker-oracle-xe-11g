@@ -1,12 +1,22 @@
+##
+##  This image is a fork from:
+##          https://github.com/wnameless/docker-oracle-xe-11g
+##  Author:
+##          Wei-Ming Wu <wnameless@gmail.com>
+
 FROM ubuntu:16.04
 
-MAINTAINER Wei-Ming Wu <wnameless@gmail.com>
+MAINTAINER Francisco Correia <fjrcorreia@github.com>
+
+## Oracle
+ENV NLS_LANG    American_America.WE8MSWIN1252
+
+USER root
 
 ADD assets /assets
 RUN /assets/setup.sh
 
-EXPOSE 22
 EXPOSE 1521
 EXPOSE 8080
 
-CMD /usr/sbin/startup.sh && /usr/sbin/sshd -D
+CMD /usr/sbin/startup.sh && tail -f $ORACLE_HOME_LISTNER/listener.log
