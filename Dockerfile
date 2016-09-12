@@ -6,7 +6,7 @@
 
 FROM ubuntu:16.04
 
-MAINTAINER Francisco Correia <fjrcorreia@github.com>
+MAINTAINER Francisco Correia
 
 ## Oracle
 ENV NLS_LANG    American_America.WE8MSWIN1252
@@ -19,4 +19,4 @@ RUN /assets/setup.sh
 EXPOSE 1521
 EXPOSE 8080
 
-CMD /usr/sbin/startup.sh && tail -f $ORACLE_HOME_LISTNER/listener.log
+CMD ["/usr/sbin/startup.sh"]

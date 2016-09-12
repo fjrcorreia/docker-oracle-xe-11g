@@ -46,7 +46,7 @@ fi
 if [ ! -e "/docker-entrypoint-initdb.d/.configured" ]; then
     for f in /docker-entrypoint-initdb.d/*; do
       case "$f" in
-        *.sh)     echo "$0: running $f"; . "$f" ;;
+        *.sh)     echo "$0: running $f"; /bin/bash -c "$f" ;;
         *.sql)    echo "$0: running $f"; echo "exit" | /u01/app/oracle/product/11.2.0/xe/bin/sqlplus "SYSTEM/oracle" @"$f"; echo ;;
         *)        echo "$0: ignoring $f" ;;
       esac
@@ -56,3 +56,6 @@ if [ ! -e "/docker-entrypoint-initdb.d/.configured" ]; then
         touch /docker-entrypoint-initdb.d/.configured
     fi
 fi
+
+
+exec /usr/bin/tail -F /u01/app/oracle/diag/tnslsnr/${HOSTNAME}/listener/trace/listener.log

@@ -6,12 +6,17 @@ export DEBIAN_FRONTEND=noninteractive
 cat /assets/oracle-xe_11.2.0-1.0_amd64.deba* > /assets/oracle-xe_11.2.0-1.0_amd64.deb
 
 
-# Prepare to install Oracle
+
+
+## Update image
 apt-get update
-locale-gen
-printf \\n147\\n3\\n | dpkg-reconfigure locales
-locale-gen
+
+## Required to oracle
 apt-get install -y libaio1 net-tools bc
+
+## install supervisor to lanch multiple process
+#apt-get install -y supervisor
+
 ln -s /usr/bin/awk /bin/awk
 mkdir /var/lock/subsys
 mv /assets/chkconfig /sbin/chkconfig
@@ -43,10 +48,13 @@ chmod +x /usr/sbin/startup.sh
 
 
 
-## change the init script
+## Add a custom init script to run on the first time
 cp  /assets/firstStartup.sql \
     /u01/app/oracle/product/11.2.0/xe/config/scripts/firstStartup.sql
 
+
+## Configure supervisor
+# cp  /assets/supervisord.conf    /etc/supervisor/conf.d/supervisord.conf
 
 # Remove installation files
 rm -r /assets/
